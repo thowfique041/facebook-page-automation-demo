@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="একটি Facebook Page-এর জন্য customer reply, comment ও order automation demo.">
+  <meta name="theme-color" content="#081b33">
+  <title>PagePilot — Facebook Automation</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23081b33'/%3E%3Cpath d='M18 18h28v20H31l-9 8v-8h-4z' fill='%2338bdf8'/%3E%3Ccircle cx='27' cy='28' r='2' fill='white'/%3E%3Ccircle cx='32' cy='28' r='2' fill='white'/%3E%3Ccircle cx='37' cy='28' r='2' fill='white'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand"><span class="brand-mark" aria-hidden="true">P</span><div><strong>PagePilot</strong><small>Facebook Automation</small></div></div>
+      <nav aria-label="Main navigation">
+        <button class="nav-item active" data-view="overview"><span data-icon="grid"></span>Overview</button>
+        <button class="nav-item" data-view="inbox"><span data-icon="message"></span>Inbox <b class="nav-count">3</b></button>
+        <button class="nav-item" data-view="orders"><span data-icon="bag"></span>Orders</button>
+        <button class="nav-item" data-view="rules"><span data-icon="zap"></span>Rules</button>
+        <button class="nav-item" data-view="faq"><span data-icon="book"></span>FAQ</button>
+        <button class="nav-item" data-view="settings"><span data-icon="settings"></span>Settings</button>
+      </nav>
+      <div class="sidebar-foot">
+        <div class="page-avatar">TC</div><div><strong>TrustCart Demo</strong><small><i class="status-dot"></i> Page connected</small></div>
+      </div>
+    </aside>
+
+    <main>
+      <header class="topbar">
+        <button class="icon-button menu-button" id="menuButton" aria-label="Open menu"><span data-icon="menu"></span></button>
+        <div><p class="eyebrow">SINGLE PAGE WORKSPACE</p><h1 id="pageTitle">Overview</h1></div>
+        <div class="top-actions"><button class="mode-switch" id="modeSwitch" aria-pressed="false"><i></i><span>Shadow mode</span></button><button class="icon-button" aria-label="Notifications"><span data-icon="bell"></span><b class="alert-dot"></b></button><div class="user-avatar">T</div></div>
+      </header>
+
+      <div class="content">
+        <section class="view active" id="overview-view">
+          <div class="status-banner"><div><span class="pulse"></span><div><strong>Automation is observing safely</strong><p>Replies are being prepared but not sent while Shadow mode is active.</p></div></div><button class="button secondary" data-go="settings">Review settings</button></div>
+          <div class="metrics" id="metrics"></div>
+          <div class="overview-grid">
+            <article class="panel activity-panel"><div class="panel-head"><div><p class="eyebrow">TODAY</p><h2>Conversation activity</h2></div><button class="text-button" data-go="inbox">Open inbox <span aria-hidden="true">→</span></button></div><div class="chart-wrap"><div class="chart" id="chart"></div><div class="chart-labels"><span>9 AM</span><span>12 PM</span><span>3 PM</span><span>6 PM</span><span>9 PM</span></div></div><div class="legend"><span><i class="blue"></i>Incoming</span><span><i class="cyan"></i>Automated</span><span><i class="coral"></i>Human handoff</span></div></article>
+            <article class="panel queue-panel"><div class="panel-head"><div><p class="eyebrow">NEEDS ATTENTION</p><h2>Priority queue</h2></div><span class="count-pill">3 open</span></div><div id="priorityQueue"></div></article>
+          </div>
+          <div class="lower-grid">
+            <article class="panel source-panel"><div class="panel-head"><div><p class="eyebrow">REPLY SOURCES</p><h2>What answered customers</h2></div></div><div class="source-bars" id="sourceBars"></div></article>
+            <article class="panel health-panel"><div class="panel-head"><div><p class="eyebrow">SYSTEM HEALTH</p><h2>Connection status</h2></div></div><div class="health-list"><div><span data-icon="facebook"></span><p><strong>Facebook Page</strong><small>Last event 2 min ago</small></p><b class="healthy">Healthy</b></div><div><span data-icon="database"></span><p><strong>Product catalogue</strong><small>48 products synced</small></p><b class="healthy">Ready</b></div><div><span data-icon="brain"></span><p><strong>AI provider</strong><small>Response time 1.4 sec</small></p><b class="healthy">Online</b></div></div></article>
+          </div>
+        </section>
+
+        <section class="view" id="inbox-view">
+          <div class="workspace inbox-workspace">
+            <aside class="thread-list"><div class="workspace-head"><div><p class="eyebrow">CONVERSATIONS</p><h2>Inbox</h2></div><button class="icon-button"><span data-icon="filter"></span></button></div><label class="search"><span data-icon="search"></span><input id="threadSearch" placeholder="Search conversations" aria-label="Search conversations"></label><div class="filter-row"><button class="filter-chip active" data-filter="all">All</button><button class="filter-chip" data-filter="human">Needs human</button><button class="filter-chip" data-filter="order">Orders</button></div><div id="threadList"></div></aside>
+            <article class="conversation" id="conversation"><div class="empty-conversation">Select a conversation</div></article><button class="mobile-thread-back" id="mobileThreadBack" aria-label="Back to conversations">← Conversations</button>
+            <aside class="customer-panel" id="customerPanel"></aside>
+          </div>
+        </section>
+
+        <section class="view" id="orders-view"><div class="page-actions"><div><p class="eyebrow">ORDER PIPELINE</p><h2>Messenger orders</h2></div><button class="button primary" id="exportOrders">Export CSV</button></div><div class="order-stats" id="orderStats"></div><article class="panel table-panel"><div class="table-tools"><label class="search"><span data-icon="search"></span><input id="orderSearch" placeholder="Search name, phone or order" aria-label="Search orders"></label><select id="orderStatus" aria-label="Filter order status"><option value="all">All status</option><option value="confirming">Confirming</option><option value="placed">Placed</option><option value="cancelled">Cancelled</option></select></div><div class="table-scroll"><table><thead><tr><th>Customer</th><th>Product</th><th>Total</th><th>Status</th><th>Updated</th></tr></thead><tbody id="ordersTable"></tbody></table></div></article></section>
+
+        <section class="view" id="rules-view"><div class="page-actions"><div><p class="eyebrow">AUTOMATION LOGIC</p><h2>Reply rules</h2></div><button class="button primary" data-modal="ruleModal">+ New rule</button></div><div class="rule-list" id="ruleList"></div></section>
+        <section class="view" id="faq-view"><div class="page-actions"><div><p class="eyebrow">KNOWLEDGE BASE</p><h2>Frequently asked questions</h2></div><button class="button primary" data-modal="faqModal">+ Add answer</button></div><div class="faq-grid" id="faqGrid"></div></section>
+
+        <section class="view" id="settings-view"><div class="settings-layout"><nav class="settings-nav"><button class="active">General</button><button>AI & replies</button><button>Orders</button><button>Safety</button></nav><div class="settings-main"><article class="panel settings-card"><p class="eyebrow">PAGE MODE</p><h2>How automation should operate</h2><div class="mode-options"><label><input type="radio" name="mode" value="off"><span><b>Off</b><small>Receive events without preparing replies</small></span></label><label class="selected"><input type="radio" name="mode" value="shadow" checked><span><b>Shadow</b><small>Prepare replies for team review</small></span></label><label><input type="radio" name="mode" value="live"><span><b>Live</b><small>Send approved automatic replies</small></span></label></div></article><article class="panel settings-card"><p class="eyebrow">BUSINESS HOURS</p><h2>Customer availability</h2><div class="setting-row"><div><strong>Use business hours</strong><small>Send an away message outside your schedule</small></div><button class="toggle on" aria-pressed="true"><i></i></button></div><div class="time-grid"><label>Starts<input type="time" value="09:00"></label><label>Ends<input type="time" value="22:00"></label></div></article><article class="panel danger-card"><div><p class="eyebrow">EMERGENCY CONTROL</p><h2>Pause all outgoing replies</h2><p>Inbound messages will still be saved for staff review.</p></div><button class="button danger" id="killSwitch">Activate kill switch</button></article></div></div></section>
+      </div>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <div class="modal-backdrop" id="ruleModal"><form class="modal"><button type="button" class="modal-close" aria-label="Close">×</button><p class="eyebrow">NEW AUTOMATION RULE</p><h2>Create a reply rule</h2><label>Rule name<input required name="name" placeholder="e.g. Delivery charge"></label><label>Customer says<input required name="keyword" placeholder="delivery, charge, shipping"></label><label>Reply<textarea required name="reply" rows="4" placeholder="Write the approved reply"></textarea></label><button class="button primary" type="submit">Save rule</button></form></div>
+  <div class="modal-backdrop" id="faqModal"><form class="modal"><button type="button" class="modal-close" aria-label="Close">×</button><p class="eyebrow">NEW FAQ</p><h2>Add an approved answer</h2><label>Question<input required name="question" placeholder="Customer question"></label><label>Answer<textarea required name="answer" rows="5" placeholder="Approved answer"></textarea></label><button class="button primary" type="submit">Save answer</button></form></div>
+  <script src="app.js"></script>
+</body>
+</html>
